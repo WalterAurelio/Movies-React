@@ -1,6 +1,12 @@
-import { createRootRoute, Link, Outlet } from '@tanstack/react-router'
+import { Link, Outlet, createRootRouteWithContext } from '@tanstack/react-router'
+import '../styles/__root.scss'
+import { QueryClient } from '@tanstack/react-query'
 
-export const Route = createRootRoute({
+type QueryContext = {
+  queryClient: QueryClient
+}
+
+export const Route = createRootRouteWithContext<QueryContext>()({
   component: Main
 })
 
@@ -13,8 +19,7 @@ const activeProps = {
 function Main() {
   return (
     <>
-      <div>Yo estoy siempre...</div>
-      <nav>
+      <nav className='navbar'>
         <ul>
           <li>
             <Link
@@ -48,6 +53,14 @@ function Main() {
               My Playlist
             </Link>
           </li>
+          <li>
+            <Link
+              to='/about'
+              activeProps={activeProps}
+            >
+              About
+            </Link>
+          </li>
         </ul>
 
         <input 
@@ -63,6 +76,8 @@ function Main() {
 
       </nav>
       <Outlet />
+      <br />
+      <footer>Soy el footer</footer>
     </>
   );
 }
