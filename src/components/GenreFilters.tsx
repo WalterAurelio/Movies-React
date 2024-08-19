@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router';
 import { useGetGenres } from '../services/queries'
 
 function GenreFilters() {
@@ -10,13 +11,15 @@ function GenreFilters() {
     <div>
       {
         data?.map(genre =>
-          <button
+          <Link
             key={genre.id}
-            type='button'
-            onClick={() => {}}
+            to='/movies/$genre'
+            params={{
+              genre: genre.name
+            }}
           >
             {genre.name}
-          </button>
+          </Link>
         )
       }
     </div>

@@ -15,7 +15,7 @@ import { Route as PlaylistImport } from './routes/playlist'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 import { Route as MoviesIndexImport } from './routes/movies/index'
-import { Route as MoviesIdImport } from './routes/movies/$id'
+import { Route as MoviesGenreImport } from './routes/movies/$genre'
 
 // Create/Update Routes
 
@@ -39,8 +39,8 @@ const MoviesIndexRoute = MoviesIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const MoviesIdRoute = MoviesIdImport.update({
-  path: '/movies/$id',
+const MoviesGenreRoute = MoviesGenreImport.update({
+  path: '/movies/$genre',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -69,11 +69,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlaylistImport
       parentRoute: typeof rootRoute
     }
-    '/movies/$id': {
-      id: '/movies/$id'
-      path: '/movies/$id'
-      fullPath: '/movies/$id'
-      preLoaderRoute: typeof MoviesIdImport
+    '/movies/$genre': {
+      id: '/movies/$genre'
+      path: '/movies/$genre'
+      fullPath: '/movies/$genre'
+      preLoaderRoute: typeof MoviesGenreImport
       parentRoute: typeof rootRoute
     }
     '/movies/': {
@@ -92,7 +92,7 @@ export const routeTree = rootRoute.addChildren({
   IndexRoute,
   AboutRoute,
   PlaylistRoute,
-  MoviesIdRoute,
+  MoviesGenreRoute,
   MoviesIndexRoute,
 })
 
@@ -107,7 +107,7 @@ export const routeTree = rootRoute.addChildren({
         "/",
         "/about",
         "/playlist",
-        "/movies/$id",
+        "/movies/$genre",
         "/movies/"
       ]
     },
@@ -120,8 +120,8 @@ export const routeTree = rootRoute.addChildren({
     "/playlist": {
       "filePath": "playlist.tsx"
     },
-    "/movies/$id": {
-      "filePath": "movies/$id.tsx"
+    "/movies/$genre": {
+      "filePath": "movies/$genre.tsx"
     },
     "/movies/": {
       "filePath": "movies/index.tsx"

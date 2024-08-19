@@ -39,14 +39,6 @@ function Main() {
           </li>
           <li>
             <Link
-              to='/'
-              activeProps={activeProps}
-            >
-              Categories
-            </Link>
-          </li>
-          <li>
-            <Link
               to='/playlist'
               activeProps={activeProps}
             >
@@ -62,22 +54,8 @@ function Main() {
             </Link>
           </li>
         </ul>
-
-        <input 
-          type='text'
-          placeholder='Ingrese película...'
-          id='searchMovie'
-        />
-        <button
-          type='button'
-        >
-          Buscar
-        </button>
-
       </nav>
       <Outlet />
-      <br />
-      <footer>Soy el footer</footer>
     </>
   );
 }
