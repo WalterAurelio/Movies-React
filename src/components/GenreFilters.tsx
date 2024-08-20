@@ -13,9 +13,9 @@ function GenreFilters() {
         data?.map(genre =>
           <Link
             key={genre.id}
-            to='/movies/$genre'
+            to='/movies/genre/$genreId'
             params={{
-              genre: genre.name
+              genreId: genre.id.toString()
             }}
           >
             {genre.name}

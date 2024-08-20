@@ -23,3 +23,19 @@ export const getMovies = async (): Promise<MovieDetails[]> => {
     genre_ids: movie.genre_ids
   }))
 };
+
+export const getMoviesByGenre = async (genreId: number): Promise<MovieDetails[]> => {
+  const movies = await getMovies();
+  const filteredMovies = movies.filter(movie => {
+    if (movie.genre_ids.includes(genreId)) {
+      return movie;
+    }
+  });
+  return filteredMovies;
+}
+
+export const getMovieByName = async (movieName: string): Promise<MovieDetails | undefined> => {
+  const movies = await getMovies();
+  const filteredMovie = movies.find(movie => movie.title === movieName);
+  return filteredMovie;
+}
