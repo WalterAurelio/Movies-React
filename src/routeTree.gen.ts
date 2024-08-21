@@ -11,20 +11,25 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as PlaylistImport } from './routes/playlist'
+import { Route as PlaylistRouteImport } from './routes/playlist/route'
+import { Route as AboutRouteImport } from './routes/about/route'
 import { Route as IndexImport } from './routes/index'
+import { Route as SearchLayoutImport } from './routes/_search/_layout'
 import { Route as MoviesLayoutImport } from './routes/_movies/_layout'
-import { Route as AboutLayoutImport } from './routes/_about/_layout'
+import { Route as SearchLayoutSearchIndexImport } from './routes/_search/_layout/search/index'
 import { Route as MoviesLayoutMoviesIndexImport } from './routes/_movies/_layout/movies/index'
-import { Route as AboutLayoutAboutIndexImport } from './routes/_about/_layout/about/index'
-import { Route as AboutLayoutAboutNosotrosIndexImport } from './routes/_about/_layout/about/nosotros/index'
 import { Route as MoviesLayoutMoviesWatchMovieNameImport } from './routes/_movies/_layout/movies/watch/$movieName'
 import { Route as MoviesLayoutMoviesGenreGenreIdImport } from './routes/_movies/_layout/movies/genre/$genreId'
 
 // Create/Update Routes
 
-const PlaylistRoute = PlaylistImport.update({
+const PlaylistRouteRoute = PlaylistRouteImport.update({
   path: '/playlist',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AboutRouteRoute = AboutRouteImport.update({
+  path: '/about',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -33,31 +38,25 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const SearchLayoutRoute = SearchLayoutImport.update({
+  id: '/_search/_layout',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const MoviesLayoutRoute = MoviesLayoutImport.update({
   id: '/_movies/_layout',
   getParentRoute: () => rootRoute,
 } as any)
 
-const AboutLayoutRoute = AboutLayoutImport.update({
-  id: '/_about/_layout',
-  getParentRoute: () => rootRoute,
+const SearchLayoutSearchIndexRoute = SearchLayoutSearchIndexImport.update({
+  path: '/search/',
+  getParentRoute: () => SearchLayoutRoute,
 } as any)
 
 const MoviesLayoutMoviesIndexRoute = MoviesLayoutMoviesIndexImport.update({
   path: '/movies/',
   getParentRoute: () => MoviesLayoutRoute,
 } as any)
-
-const AboutLayoutAboutIndexRoute = AboutLayoutAboutIndexImport.update({
-  path: '/about/',
-  getParentRoute: () => AboutLayoutRoute,
-} as any)
-
-const AboutLayoutAboutNosotrosIndexRoute =
-  AboutLayoutAboutNosotrosIndexImport.update({
-    path: '/about/nosotros/',
-    getParentRoute: () => AboutLayoutRoute,
-  } as any)
 
 const MoviesLayoutMoviesWatchMovieNameRoute =
   MoviesLayoutMoviesWatchMovieNameImport.update({
@@ -82,18 +81,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRoute
+    }
     '/playlist': {
       id: '/playlist'
       path: '/playlist'
       fullPath: '/playlist'
-      preLoaderRoute: typeof PlaylistImport
-      parentRoute: typeof rootRoute
-    }
-    '/_about/_layout': {
-      id: '/_about/_layout'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof AboutLayoutImport
+      preLoaderRoute: typeof PlaylistRouteImport
       parentRoute: typeof rootRoute
     }
     '/_movies/_layout': {
@@ -103,12 +102,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MoviesLayoutImport
       parentRoute: typeof rootRoute
     }
-    '/_about/_layout/about/': {
-      id: '/_about/_layout/about/'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutLayoutAboutIndexImport
-      parentRoute: typeof AboutLayoutImport
+    '/_search/_layout': {
+      id: '/_search/_layout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof SearchLayoutImport
+      parentRoute: typeof rootRoute
     }
     '/_movies/_layout/movies/': {
       id: '/_movies/_layout/movies/'
@@ -116,6 +115,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/movies'
       preLoaderRoute: typeof MoviesLayoutMoviesIndexImport
       parentRoute: typeof MoviesLayoutImport
+    }
+    '/_search/_layout/search/': {
+      id: '/_search/_layout/search/'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchLayoutSearchIndexImport
+      parentRoute: typeof SearchLayoutImport
     }
     '/_movies/_layout/movies/genre/$genreId': {
       id: '/_movies/_layout/movies/genre/$genreId'
@@ -131,13 +137,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MoviesLayoutMoviesWatchMovieNameImport
       parentRoute: typeof MoviesLayoutImport
     }
-    '/_about/_layout/about/nosotros/': {
-      id: '/_about/_layout/about/nosotros/'
-      path: '/about/nosotros'
-      fullPath: '/about/nosotros'
-      preLoaderRoute: typeof AboutLayoutAboutNosotrosIndexImport
-      parentRoute: typeof AboutLayoutImport
-    }
   }
 }
 
@@ -145,15 +144,15 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
-  PlaylistRoute,
-  AboutLayoutRoute: AboutLayoutRoute.addChildren({
-    AboutLayoutAboutIndexRoute,
-    AboutLayoutAboutNosotrosIndexRoute,
-  }),
+  AboutRouteRoute,
+  PlaylistRouteRoute,
   MoviesLayoutRoute: MoviesLayoutRoute.addChildren({
     MoviesLayoutMoviesIndexRoute,
     MoviesLayoutMoviesGenreGenreIdRoute,
     MoviesLayoutMoviesWatchMovieNameRoute,
+  }),
+  SearchLayoutRoute: SearchLayoutRoute.addChildren({
+    SearchLayoutSearchIndexRoute,
   }),
 })
 
@@ -166,23 +165,20 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/about",
         "/playlist",
-        "/_about/_layout",
-        "/_movies/_layout"
+        "/_movies/_layout",
+        "/_search/_layout"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/playlist": {
-      "filePath": "playlist.tsx"
+    "/about": {
+      "filePath": "about/route.tsx"
     },
-    "/_about/_layout": {
-      "filePath": "_about/_layout.tsx",
-      "children": [
-        "/_about/_layout/about/",
-        "/_about/_layout/about/nosotros/"
-      ]
+    "/playlist": {
+      "filePath": "playlist/route.tsx"
     },
     "/_movies/_layout": {
       "filePath": "_movies/_layout.tsx",
@@ -192,13 +188,19 @@ export const routeTree = rootRoute.addChildren({
         "/_movies/_layout/movies/watch/$movieName"
       ]
     },
-    "/_about/_layout/about/": {
-      "filePath": "_about/_layout/about/index.tsx",
-      "parent": "/_about/_layout"
+    "/_search/_layout": {
+      "filePath": "_search/_layout.tsx",
+      "children": [
+        "/_search/_layout/search/"
+      ]
     },
     "/_movies/_layout/movies/": {
       "filePath": "_movies/_layout/movies/index.tsx",
       "parent": "/_movies/_layout"
+    },
+    "/_search/_layout/search/": {
+      "filePath": "_search/_layout/search/index.tsx",
+      "parent": "/_search/_layout"
     },
     "/_movies/_layout/movies/genre/$genreId": {
       "filePath": "_movies/_layout/movies/genre/$genreId.tsx",
@@ -207,10 +209,6 @@ export const routeTree = rootRoute.addChildren({
     "/_movies/_layout/movies/watch/$movieName": {
       "filePath": "_movies/_layout/movies/watch/$movieName.tsx",
       "parent": "/_movies/_layout"
-    },
-    "/_about/_layout/about/nosotros/": {
-      "filePath": "_about/_layout/about/nosotros/index.tsx",
-      "parent": "/_about/_layout"
     }
   }
 }

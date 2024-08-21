@@ -39,6 +39,14 @@ function Main() {
           </li>
           <li>
             <Link
+              to='/search'
+              activeProps={activeProps}
+            >
+              Search
+            </Link>
+          </li>
+          <li>
+            <Link
               to='/playlist'
               activeProps={activeProps}
             >

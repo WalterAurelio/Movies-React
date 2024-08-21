@@ -1,3 +1,8 @@
+type QueryResults = {
+  page: number,
+  results: MovieDetails[]
+}
+
 export type MovieDetails = {
   id: number,
   title: string,
@@ -38,4 +43,11 @@ export const getMovieByName = async (movieName: string): Promise<MovieDetails | 
   const movies = await getMovies();
   const filteredMovie = movies.find(movie => movie.title === movieName);
   return filteredMovie;
+}
+
+export const getMoviesByName = async (movieName: string): Promise<MovieDetails[]> => {
+  const res = await fetch(`https://api.themoviedb.org/3/search/person?query=${movieName}&api_key=ebe4bcc4bf16f20559e272d19399574e&language=es-US`);
+  const data: QueryResults = await res.json();
+  console.log(data.results);
+  return data.results;
 }

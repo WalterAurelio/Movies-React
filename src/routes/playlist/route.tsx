@@ -1,11 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/playlist')({
-  component: Playlist
+  component: () => <div>Hola, soy Playlist</div>
 })
-
-function Playlist() {
-  return (
-    <div>Soy la Playlist...</div>
-  );
-}
