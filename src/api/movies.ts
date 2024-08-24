@@ -45,9 +45,9 @@ export const getMovieByName = async (movieName: string): Promise<MovieDetails | 
   return filteredMovie;
 }
 
-export const getMoviesByName = async (movieName: string): Promise<MovieDetails[]> => {
-  const res = await fetch(`https://api.themoviedb.org/3/search/person?query=${movieName}&api_key=ebe4bcc4bf16f20559e272d19399574e&language=es-US`);
+export const getMoviesByName = async (movieName: string | undefined): Promise<MovieDetails[]> => {
+  const res = await fetch(`https://api.themoviedb.org/3/search/movie?query=${movieName}&api_key=ebe4bcc4bf16f20559e272d19399574e&language=es-US`);
   const data: QueryResults = await res.json();
-  console.log(data.results);
+  // console.log(data.results);
   return data.results;
 }

@@ -1,6 +1,7 @@
 import { Link, Outlet, createRootRouteWithContext } from '@tanstack/react-router'
 import '../styles/__root.scss'
 import { QueryClient } from '@tanstack/react-query'
+import { useMovieNameStore } from '../store/movieNameStore'
 
 type QueryContext = {
   queryClient: QueryClient
@@ -17,6 +18,8 @@ const activeProps = {
 }
 
 function Main() {
+  const { setMovieName } = useMovieNameStore();
+
   return (
     <>
       <nav className='navbar'>
@@ -41,6 +44,7 @@ function Main() {
             <Link
               to='/search'
               activeProps={activeProps}
+              onClick={() => setMovieName('')}
             >
               Search
             </Link>

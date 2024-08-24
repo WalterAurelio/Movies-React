@@ -1,51 +1,70 @@
 import { createFileRoute, Outlet, useNavigate } from '@tanstack/react-router'
 import * as v from 'valibot'
-import { useState } from 'react'
-import { getMoviesByName } from '../../api/movies'
-
-/* type Search = {
-  userQuery: string
-} */
+import { useEffect } from 'react'
+import SearchInput from '../../components/SearchInput'
+import FilteredMovies from '../../components/FilteredMovies'
+import { useMovieNameStore } from '../../store/movieNameStore'
+import { useShallow } from 'zustand/react/shallow'
 
 const Search = v.object({
-  userQuery: v.optional(v.string())
+  query: v.optional(v.string())
 })
 
 type Search = v.InferOutput<typeof Search>
 
 export const Route = createFileRoute('/_search/_layout')({
   component: Layout,
-  validateSearch: (search) => v.parse(Search, search)
+  validateSearch: (search) => v.parse(Search, search),
 })
 
 function Layout() {
-  const { userQuery } = Route.useSearch();
-  const [busqueda, setBusqueda] = useState(userQuery);
+  const { query } = Route.useSearch();
   const navigate = useNavigate({ from: Route.fullPath });
+  const { movieName } = useMovieNameStore(useShallow((state) => ({
+    movieName: state.movieName
+  })));
+  const { setMovieName } = useMovieNameStore();
+
+  useEffect(() => {
+    if (query) {
+      setMovieName(query);
+    }
+
+    return () => {
+      setMovieName('');
+    }
+  }, [query, setMovieName]);
 
   return (
     <div>
       <h2>Búsqueda:</h2>
 
+      {movieName || query}
+
+      {/* <SearchInput query={query} navigate={navigate} /> */}
       <input
         type='text'
-        value={busqueda || ''}
+        value={movieName || ''}
         placeholder='Ingrese su búsqueda'
-        onChange={(e) => setBusqueda(e.target.value)}
+        onChange={(e) => {
+          setMovieName(e.target.value)
+        }}
+
       />
       <button
         type='button'
         onClick={() => {
-          getMoviesByName(busqueda || '');
           navigate({
-            search: (prev) => ({ ...prev, userQuery: busqueda})
+            search: (prev) => ({ ...prev, query: movieName })
           })
         }}
       >
         Buscar
       </button>
 
-      <pre>{JSON.stringify({ userQuery })}</pre>
+      <pre>{JSON.stringify({ query })}</pre>
+
+      <FilteredMovies query={query} />
 
       <Outlet />
     </div>
