@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useMovieNameStore } from '../store/movieNameStore'
-import { useShallow } from 'zustand/react/shallow';
+import { useShallow } from 'zustand/react/shallow'
 
 function SearchInput({ query, navigate }: { query: string | undefined, navigate: (arg: object) => void }) {
   const {movieName} = useMovieNameStore(useShallow((state) => ({
@@ -9,14 +9,20 @@ function SearchInput({ query, navigate }: { query: string | undefined, navigate:
   const {setMovieName} = useMovieNameStore();
 
   useEffect(() => {
-    console.log('Me rendericé SearchInput!');
-  })
+    if (query) {
+      setMovieName(query);
+    }
+
+    return () => {
+      setMovieName('');
+    }
+  }, [query, setMovieName]);
 
   return (
     <>
       <input
         type='text'
-        value={movieName || query || ''}
+        value={movieName || ''}
         placeholder='Ingrese su búsqueda'
         onChange={(e) => setMovieName(e.target.value)}
       />
@@ -26,7 +32,6 @@ function SearchInput({ query, navigate }: { query: string | undefined, navigate:
           navigate({
             search: (prev: object) => ({ ...prev, query: movieName })
           });
-          setMovieName('');
         }}
       >
         Buscar

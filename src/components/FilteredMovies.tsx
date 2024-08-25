@@ -1,13 +1,11 @@
-import { useGetMoviesByName } from "../services/queries"
-import SingleMovie from "./SingleMovie";
-import { useEffect } from "react";
+import { useEffect } from "react"
+import { useGetMoviesSearchByName } from "../services/queries"
+import SingleMovie from "./SingleMovie"
 
-function FilteredMovies({ query }: { query: string | undefined }) {
-  const { data, isFetching, error, refetch } = useGetMoviesByName(query);
+function FilteredMovies({ query }: { query: string }) {
+  const { data, isFetching, error, refetch } = useGetMoviesSearchByName(query); // renderizar condicionalmente
 
   useEffect(() => {
-    // console.log('Me rendericé FilteredMovies!');
-    // console.log(query);
     refetch();
   }, [query, refetch]);
 
@@ -27,35 +25,5 @@ function FilteredMovies({ query }: { query: string | undefined }) {
     </div>
   )
 }
-
-/* function FilteredMovies() {
-  const movieName = useMovieNameStore(useShallow((state) => state.movieName));
-  const { data, isFetching, error, refetch } = useGetMoviesByName(movieName);
-
-  useEffect(() => {
-
-  })
-
-  useEffect(() => {
-    console.log('Me renderizé FilteredMovies.');
-    refetch();
-  }, [movieName, refetch]);
-
-  if (isFetching) return <p>Cargando películas...</p>;
-  if (error) return <p>{JSON.stringify(error)}</p>;
-
-  return (
-    <div>
-      {
-        data?.map(movie =>
-          <SingleMovie 
-            key={movie.id}
-            movie={movie}
-          />
-        )
-      }
-    </div>
-  )
-} */
 
 export default FilteredMovies

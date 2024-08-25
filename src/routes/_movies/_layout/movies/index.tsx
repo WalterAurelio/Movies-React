@@ -12,7 +12,7 @@ function Movies() {
 
   return (
     <div>
-      <div>Todas las películas NUEVO.</div>
+      <h2>Todas las películas</h2>
       <ul>
         {
           movies?.map(movie =>

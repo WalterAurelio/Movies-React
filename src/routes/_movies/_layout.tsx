@@ -8,7 +8,7 @@ export const Route = createFileRoute('/_movies/_layout')({
 function Layout() {
   return (
     <div>
-      <p>Soy el Layout de Movies</p>
+      <h2>Soy el Layout de Movies</h2>
       <Link
         to='/movies'
       >
