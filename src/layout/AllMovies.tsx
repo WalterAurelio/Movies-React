@@ -1,7 +1,7 @@
-import { MovieDetails } from "../api/movies"
+import { MovieSearch } from "../api/movies"
 import GenreFilters from "../components/GenreFilters"
 
-function AllMovies({ movies }: { movies: MovieDetails[] }) {
+function AllMovies({ movies }: { movies: MovieSearch[] }) {
   return (
     <div>
       <h3>Todas las películas</h3>

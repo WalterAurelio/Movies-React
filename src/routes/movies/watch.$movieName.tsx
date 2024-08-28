@@ -1,9 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { getMovieByName } from '../../../../../api/movies';
+import { getMovieDetailsByName } from '../../api/movies';
 
-export const Route = createFileRoute('/_movies/_layout/movies/watch/$movieName')({
+export const Route = createFileRoute('/movies/watch/$movieName')({
   component: WatchMovie,
-  loader: ({params}) => getMovieByName(params.movieName)
+  loader: ({params}) => getMovieDetailsByName(params.movieName)
 })
 
 function WatchMovie() {

@@ -34,7 +34,7 @@ function Main() {
           </li>
           <li>
             <Link
-              to='/movies'
+              to='/movies/all'
               activeProps={activeProps}
             >
               Movies
