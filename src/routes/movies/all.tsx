@@ -1,13 +1,13 @@
 import { createFileRoute } from '@tanstack/react-router';
 import SingleMovie from '../../components/SingleMovie';
-import { useGetMoviesSearch } from '../../services/queries';
+import { useGetMoviesDiscover } from '../../services/queries';
 
 export const Route = createFileRoute('/movies/all')({
   component: AllMovies,
 });
 
 function AllMovies() {
-  const { data, error, isFetching } = useGetMoviesSearch();
+  const { data, error, isFetching } = useGetMoviesDiscover();
 
   if (isFetching) return <p>Cargando todas las películas...</p>;
   if (error) return <p>{JSON.stringify(error)}</p>;

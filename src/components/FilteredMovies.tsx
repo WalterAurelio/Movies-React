@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { useGetMoviesSearchByName } from '../services/queries';
+import { useGetMoviesDiscoverByName } from '../services/queries';
 import SingleMovie from './SingleMovie';
 
 function FilteredMovies({ query }: { query: string }) {
-  const { data, isFetching, error, refetch } = useGetMoviesSearchByName(query);
+  const { data, isFetching, error, refetch } = useGetMoviesDiscoverByName(query);
 
   useEffect(() => {
     refetch();

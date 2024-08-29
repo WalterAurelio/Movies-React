@@ -1,12 +1,12 @@
 import { Link } from '@tanstack/react-router';
-import { MovieSearch } from '../api/movies';
+import { MovieDiscover } from '../api/movies';
 
-function SingleMovie({ movie }: { movie: MovieSearch }) {
+function SingleMovie({ movie }: { movie: MovieDiscover }) {
   return (
     <Link
-      to="/movies/watch/$movieName"
+      to={`/movies/watch/$movie`}
       params={{
-        movieName: movie.title,
+        movie: JSON.stringify({ id: movie.id, title: movie.title }),
       }}
     >
       <div>

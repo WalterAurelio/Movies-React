@@ -1,6 +1,6 @@
-import { MovieSearch } from '../api/movies';
+import { MovieDiscover } from '../api/movies';
 
-function TrendingMovie({ movie }: { movie: MovieSearch }) {
+function TrendingMovie({ movie }: { movie: MovieDiscover }) {
   return (
     <div>
       <p>{movie.title}</p>

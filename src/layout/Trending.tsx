@@ -1,7 +1,7 @@
-import { MovieSearch } from '../api/movies';
+import { MovieDiscover } from '../api/movies';
 import TrendingMovie from '../components/TrendingMovie';
 
-function Trending({ movies }: { movies: MovieSearch[] }) {
+function Trending({ movies }: { movies: MovieDiscover[] }) {
   console.log(movies);
 
   return (

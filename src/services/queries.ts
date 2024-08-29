@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { getGenres } from '../api/genres';
-import { getMoviesSearch, getMoviesSearchByGenre, getMoviesSearchByName } from '../api/movies';
+import { getMovieDetailsById, getMoviesDiscover, getMoviesDiscoverByGenre, getMoviesDiscoverByName } from '../api/movies';
 
 export function useGetGenres() {
   return useQuery({
@@ -9,30 +9,43 @@ export function useGetGenres() {
   });
 }
 
-export function useGetMoviesSearchByName(movieName: string) {
+export function useGetMoviesDiscover() {
   return useQuery({
-    queryKey: ['moviesSearchByName'],
-    queryFn: ({ signal }) => getMoviesSearchByName(movieName, signal),
+    queryKey: ['moviesDiscover'],
+    queryFn: ({ signal }) => getMoviesDiscover(signal),
   });
 }
 
-export function useGetMoviesSearch() {
+export function useGetMoviesDiscoverByGenre(genreId: string) {
   return useQuery({
-    queryKey: ['movies'],
-    queryFn: ({ signal }) => getMoviesSearch(signal),
-  });
-}
-
-export function useGetMoviesSearchByGenre(genreId: string) {
-  return useQuery({
-    queryKey: ['moviesSearchByGenre', genreId],
+    queryKey: ['moviesDiscoverByGenre', genreId],
     queryFn: async ({ signal }) => {
       const genres = await getGenres(signal);
       const genre = genres.find(genre => genre.id === Number(genreId));
       const genreName = genre?.name;
-      const movies = await getMoviesSearchByGenre(Number(genreId), signal);
+      const movies = await getMoviesDiscoverByGenre(Number(genreId), signal);
       return { genreName, movies };
     },
-    staleTime: 600000
+  });
+}
+
+export function useGetMoviesDiscoverByName(movieName: string) {
+  return useQuery({
+    queryKey: ['moviesDiscoverByName', movieName],
+    queryFn: ({ signal }) => getMoviesDiscoverByName(movieName, signal),
+  });
+}
+
+/* export function useGetMovieDetailsById(movieId: number) {
+  return useQuery({
+    queryKey: ['movieDetailsById', { movieId }],
+    queryFn: ({ signal }) => getMovieDetailsById(movieId, signal),
+  });
+} */
+
+export function useGetMovieDetailsById(movieId: number | undefined) {
+  return useQuery({
+    queryKey: ['movieDetailsById', { movieId }],
+    queryFn: ({ signal }) => getMovieDetailsById(movieId, signal),
   });
 }

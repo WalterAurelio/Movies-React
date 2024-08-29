@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import SingleMovie from '../../components/SingleMovie';
-import { useGetMoviesSearchByGenre } from '../../services/queries';
+import { useGetMoviesDiscoverByGenre } from '../../services/queries';
 
 export const Route = createFileRoute('/movies/genre/$genreId')({
   component: MoviesByGenre,
@@ -8,7 +8,7 @@ export const Route = createFileRoute('/movies/genre/$genreId')({
 
 function MoviesByGenre() {
   const { genreId } = Route.useParams();
-  const { data, isFetching, error } = useGetMoviesSearchByGenre(genreId);
+  const { data, isFetching, error } = useGetMoviesDiscoverByGenre(genreId);
 
   if (isFetching) return <p>Cargando películas por género...</p>;
   if (error) return <p>{JSON.stringify(error)}</p>;
