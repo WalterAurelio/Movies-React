@@ -10,7 +10,7 @@ function Movies() {
     <div>
       <h2>Soy el layout de movies todo en uno.</h2>
       <Link
-        to='/movies/discover'
+        to="/movies/discover"
         search={{
           page: 1,
         }}

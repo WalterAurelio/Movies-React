@@ -22,12 +22,17 @@ function SearchInput({ query, navigate }: { query: string | undefined; navigate:
 
   return (
     <>
-      <input type="text" value={movieName || ''} placeholder="Ingrese su búsqueda" onChange={e => setMovieName(e.target.value)} />
+      <input
+        type='text'
+        value={movieName || ''}
+        placeholder='Ingrese su búsqueda'
+        onChange={e => setMovieName(e.target.value)}
+      />
       <button
-        type="button"
+        type='button'
         onClick={() => {
           navigate({
-            search: (prev: object) => ({ ...prev, query: movieName }),
+            search: (prev: object) => ({ ...prev, query: movieName, page: 1 }),
           });
         }}
       >

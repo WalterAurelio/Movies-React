@@ -19,58 +19,37 @@ export type MovieDetails = {
   vote_average: number;
 };
 
+export type SearchData = {
+  page: number;
+  results: MovieDiscover[];
+  total_pages: number;
+  total_results: number;
+};
+
 export const simularDelay = (): Promise<void> => {
   return new Promise(res => setTimeout(res, 3000));
 };
 
-export const getMoviesDiscover = async (signal: AbortSignal): Promise<MovieDiscover[]> => {
+export const getMoviesDiscover = async (signal: AbortSignal, page: number, with_genres: number[] | undefined): Promise<SearchData> => {
   await simularDelay();
-  // const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=ebe4bcc4bf16f20559e272d19399574e&page=${pageParam}`, { signal });
-  const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=ebe4bcc4bf16f20559e272d19399574e`, { signal });
-  const data = (await res.json()) as {
-    results: MovieDiscover[];
-  };
-  return data.results;
+  const givenGenres = with_genres && '&with_genres=' + with_genres.toString();
+  const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=ebe4bcc4bf16f20559e272d19399574e&page=${page}${givenGenres}`, { signal });
+  const data = (await res.json()) as SearchData;
+  return data;
 };
 
-export const getMoviesDiscoverPaginated = async (signal: AbortSignal, pageParam: string): Promise<MovieDiscover[]> => {
-  await simularDelay();
-  const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=ebe4bcc4bf16f20559e272d19399574e&page=${pageParam}`, { signal });
-  const data = (await res.json()) as {
-    results: MovieDiscover[];
-  };
-  return data.results;
-};
-
-export const getMoviesDiscoverByGenre = async (genreId: number, signal: AbortSignal): Promise<MovieDiscover[]> => {
-  const movies = await getMoviesDiscover(signal);
-  const filteredMovies = movies.filter(movie => {
-    if (movie.genre_ids.includes(genreId)) {
-      return movie;
-    }
-  });
-  return filteredMovies;
-};
-
-export const getMoviesDiscoverByName = async (movieName: string, signal: AbortSignal): Promise<MovieDiscover[]> => {
-  const res = await fetch(`https://api.themoviedb.org/3/search/movie?query=${movieName}&api_key=ebe4bcc4bf16f20559e272d19399574e`, {
-    signal,
-  });
-  const data = (await res.json()) as {
-    results: MovieDiscover[];
-  };
-  return data.results;
-};
-
-export const getMovieDetailsByName = async (movieName: string, signal: AbortSignal): Promise<MovieDiscover | undefined> => {
-  const movies = await getMoviesDiscover(signal);
-  const filteredMovie = movies.find(movie => movie.title === movieName);
-  return filteredMovie;
-};
-
-export const getMovieDetailsById = async (movieId: number | undefined, signal: AbortSignal): Promise<MovieDetails | undefined> => {
+export const getMovieDetails = async (signal: AbortSignal, movieId: number | undefined): Promise<MovieDetails | undefined> => {
   await simularDelay();
   const res = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=ebe4bcc4bf16f20559e272d19399574e`, { signal });
-  const data = await res.json() as MovieDetails;
+  const data = (await res.json()) as MovieDetails;
+  return data;
+};
+
+export const getMoviesSearch = async (signal: AbortSignal, movieName: string, page: number): Promise<SearchData> => {
+  await simularDelay();
+  const res = await fetch(`https://api.themoviedb.org/3/search/movie?query=${movieName}&page=${page}&api_key=ebe4bcc4bf16f20559e272d19399574e`, {
+    signal,
+  });
+  const data = (await res.json()) as SearchData;
   return data;
 };

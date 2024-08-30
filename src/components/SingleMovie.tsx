@@ -10,7 +10,10 @@ function SingleMovie({ movie }: { movie: MovieDiscover }) {
       }}
     >
       <div>
-        <img src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`} alt={`Poster de ${movie.title}`} />
+        <img
+          src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+          alt={`Poster de ${movie.title}`}
+        />
       </div>
       <h3>{movie.title}</h3>
     </Link>

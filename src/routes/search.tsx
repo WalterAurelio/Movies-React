@@ -5,6 +5,7 @@ import FilteredMovies from '../components/FilteredMovies';
 
 const Search = v.object({
   query: v.optional(v.string()),
+  page: v.optional(v.number()),
 });
 
 type Search = v.InferOutput<typeof Search>;
@@ -15,14 +16,24 @@ export const Route = createFileRoute('/search')({
 });
 
 function Layout() {
-  const { query } = Route.useSearch();
+  const { query, page } = Route.useSearch();
   const navigate = useNavigate({ from: Route.fullPath });
 
   return (
     <div>
       <h2>Buscar película:</h2>
-      <SearchInput query={query} navigate={navigate} />
-      <>{query && <FilteredMovies query={query} />}</>
+      <SearchInput
+        query={query}
+        navigate={navigate}
+      />
+      <>
+        {query && (
+          <FilteredMovies
+            query={query}
+            page={page!}
+          />
+        )}
+      </>
     </div>
   );
 }

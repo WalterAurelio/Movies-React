@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useGetMovieDetailsById } from '../../services/queries';
+import { useGetMovieDetails } from '../../services/queries';
 
 type MovieEssentials = {
   id: number;
@@ -13,9 +13,7 @@ export const Route = createFileRoute('/movies/watch/$movie')({
 function WatchMovie() {
   const { movie } = Route.useParams();
   const movieObject: MovieEssentials = JSON.parse(movie);
-  const { data, isFetching, error } = useGetMovieDetailsById(movieObject.id);
-
-  console.log(data);
+  const { data, isFetching, error } = useGetMovieDetails(movieObject.id);
 
   if (isFetching) return <p>Cargando detalles de la película...</p>;
   if (error) return <p>{JSON.stringify(error)}</p>;

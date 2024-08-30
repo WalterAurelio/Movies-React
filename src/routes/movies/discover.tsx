@@ -1,24 +1,24 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { useGetMoviesDiscoverPaginated } from '../../services/queries';
+import { useGetMoviesDiscover } from '../../services/queries';
 import SingleMovie from '../../components/SingleMovie';
+import * as v from 'valibot';
+
+const DiscoverFilters = v.object({
+  page: v.nonOptional(v.number()),
+  with_genres: v.optional(v.array(v.number())),
+});
 
 export const Route = createFileRoute('/movies/discover')({
   component: DiscoverMovies,
-  validateSearch: (search: Record<string, unknown>): { page: number } => {
-    return {
-      page: search.page as number,
-    };
-  },
+  validateSearch: search => v.parse(DiscoverFilters, search),
 });
 
 function DiscoverMovies() {
-  const { page } = Route.useSearch();
-  const { data, isFetching, error } = useGetMoviesDiscoverPaginated(page.toString());
+  const { page, with_genres } = Route.useSearch();
+  const { data, isFetching, error } = useGetMoviesDiscover(page, with_genres);
 
   if (isFetching) return <p>Cargando películas página {page}</p>;
   if (error) return <p>{JSON.stringify(error)}</p>;
-
-  console.log(data);
 
   return (
     <div>
@@ -26,7 +26,9 @@ function DiscoverMovies() {
         to="/movies/discover"
         search={{
           page: page - 1,
+          with_genres: with_genres,
         }}
+        disabled={page === 1}
       >
         Anterior
       </Link>
@@ -34,20 +36,13 @@ function DiscoverMovies() {
         to="/movies/discover"
         search={{
           page: page + 1,
+          with_genres: with_genres,
         }}
+        disabled={page === data?.total_pages}
       >
         Siguiente
       </Link>
-      <div>
-        {
-          data?.map(movie => 
-            <SingleMovie 
-              key={movie.id}
-              movie={movie}
-            />
-          )
-        }
-      </div>
+      <div>{data?.results.map(movie => <SingleMovie key={movie.id} movie={movie} />)}</div>
     </div>
   );
 }

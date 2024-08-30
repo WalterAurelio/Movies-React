@@ -18,7 +18,6 @@ import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 import { Route as MoviesDiscoverImport } from './routes/movies/discover'
 import { Route as MoviesWatchMovieImport } from './routes/movies/watch.$movie'
-import { Route as MoviesGenreGenreIdImport } from './routes/movies/genre.$genreId'
 
 // Create/Update Routes
 
@@ -54,11 +53,6 @@ const MoviesDiscoverRoute = MoviesDiscoverImport.update({
 
 const MoviesWatchMovieRoute = MoviesWatchMovieImport.update({
   path: '/watch/$movie',
-  getParentRoute: () => MoviesRoute,
-} as any)
-
-const MoviesGenreGenreIdRoute = MoviesGenreGenreIdImport.update({
-  path: '/genre/$genreId',
   getParentRoute: () => MoviesRoute,
 } as any)
 
@@ -108,13 +102,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MoviesDiscoverImport
       parentRoute: typeof MoviesImport
     }
-    '/movies/genre/$genreId': {
-      id: '/movies/genre/$genreId'
-      path: '/genre/$genreId'
-      fullPath: '/movies/genre/$genreId'
-      preLoaderRoute: typeof MoviesGenreGenreIdImport
-      parentRoute: typeof MoviesImport
-    }
     '/movies/watch/$movie': {
       id: '/movies/watch/$movie'
       path: '/watch/$movie'
@@ -132,7 +119,6 @@ export const routeTree = rootRoute.addChildren({
   AboutRoute,
   MoviesRoute: MoviesRoute.addChildren({
     MoviesDiscoverRoute,
-    MoviesGenreGenreIdRoute,
     MoviesWatchMovieRoute,
   }),
   PlaylistRoute,
@@ -164,7 +150,6 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "movies.tsx",
       "children": [
         "/movies/discover",
-        "/movies/genre/$genreId",
         "/movies/watch/$movie"
       ]
     },
@@ -176,10 +161,6 @@ export const routeTree = rootRoute.addChildren({
     },
     "/movies/discover": {
       "filePath": "movies/discover.tsx",
-      "parent": "/movies"
-    },
-    "/movies/genre/$genreId": {
-      "filePath": "movies/genre.$genreId.tsx",
       "parent": "/movies"
     },
     "/movies/watch/$movie": {
