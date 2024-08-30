@@ -17,6 +17,8 @@ const activeProps = {
   }
 }
 
+const numaux = 1;
+
 function Main() {
   const { setMovieName } = useMovieNameStore();
 
@@ -34,8 +36,11 @@ function Main() {
           </li>
           <li>
             <Link
-              to='/movies/all'
+              to='/movies/all/$page'
               activeProps={activeProps}
+              params={{
+                page: numaux.toString()
+              }}
             >
               Movies
             </Link>

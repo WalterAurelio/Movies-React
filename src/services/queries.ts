@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { getGenres } from '../api/genres';
-import { getMovieDetailsById, getMoviesDiscover, getMoviesDiscoverByGenre, getMoviesDiscoverByName } from '../api/movies';
+import { getMovieDetailsById, getMoviesDiscover, getMoviesDiscoverByGenre, getMoviesDiscoverByName, getMoviesDiscoverPaginated } from '../api/movies';
 
 export function useGetGenres() {
   return useQuery({
@@ -13,6 +13,15 @@ export function useGetMoviesDiscover() {
   return useQuery({
     queryKey: ['moviesDiscover'],
     queryFn: ({ signal }) => getMoviesDiscover(signal),
+    placeholderData: keepPreviousData
+  });
+}
+
+export function useGetMoviesDiscoverPaginated(page: string) {
+  return useQuery({
+    queryKey: ['moviesDiscoverPaginated', {page}],
+    queryFn: ({ signal }) => getMoviesDiscoverPaginated(signal, page),
+    placeholderData: keepPreviousData
   });
 }
 
@@ -35,13 +44,6 @@ export function useGetMoviesDiscoverByName(movieName: string) {
     queryFn: ({ signal }) => getMoviesDiscoverByName(movieName, signal),
   });
 }
-
-/* export function useGetMovieDetailsById(movieId: number) {
-  return useQuery({
-    queryKey: ['movieDetailsById', { movieId }],
-    queryFn: ({ signal }) => getMovieDetailsById(movieId, signal),
-  });
-} */
 
 export function useGetMovieDetailsById(movieId: number | undefined) {
   return useQuery({

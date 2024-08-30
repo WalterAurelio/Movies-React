@@ -25,7 +25,17 @@ export const simularDelay = (): Promise<void> => {
 
 export const getMoviesDiscover = async (signal: AbortSignal): Promise<MovieDiscover[]> => {
   await simularDelay();
-  const res = await fetch('https://api.themoviedb.org/3/discover/movie?api_key=ebe4bcc4bf16f20559e272d19399574e', { signal });
+  // const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=ebe4bcc4bf16f20559e272d19399574e&page=${pageParam}`, { signal });
+  const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=ebe4bcc4bf16f20559e272d19399574e`, { signal });
+  const data = (await res.json()) as {
+    results: MovieDiscover[];
+  };
+  return data.results;
+};
+
+export const getMoviesDiscoverPaginated = async (signal: AbortSignal, pageParam: string): Promise<MovieDiscover[]> => {
+  await simularDelay();
+  const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=ebe4bcc4bf16f20559e272d19399574e&page=${pageParam}`, { signal });
   const data = (await res.json()) as {
     results: MovieDiscover[];
   };
