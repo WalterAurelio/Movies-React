@@ -36,6 +36,17 @@ function Main() {
           </li>
           <li>
             <Link
+              to='/movies/discover'
+              activeProps={activeProps}
+              search={{
+                page: 1
+              }}
+            >
+              Movies
+            </Link>
+          </li>
+{/*           <li>
+            <Link
               to='/movies/all/$page'
               activeProps={activeProps}
               params={{
@@ -44,7 +55,7 @@ function Main() {
             >
               Movies
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link
               to='/search'

@@ -6,12 +6,17 @@ export const Route = createFileRoute('/movies')({
 });
 
 function Movies() {
-  const aux = 1;
-
   return (
     <div>
       <h2>Soy el layout de movies todo en uno.</h2>
-      <Link to="/movies/all/$page" params={{page: aux.toString()}}>Todas</Link>
+      <Link
+        to='/movies/discover'
+        search={{
+          page: 1,
+        }}
+      >
+        Todas
+      </Link>
       <GenreFilters />
       <Outlet />
     </div>
