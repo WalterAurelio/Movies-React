@@ -1,23 +1,21 @@
-import { Link, Outlet, createRootRouteWithContext } from '@tanstack/react-router'
-import '../styles/__root.scss'
-import { QueryClient } from '@tanstack/react-query'
-import { useMovieNameStore } from '../store/movieNameStore'
+import { Link, Outlet, createRootRouteWithContext } from '@tanstack/react-router';
+import '../styles/__root.scss';
+import { QueryClient } from '@tanstack/react-query';
+import { useMovieNameStore } from '../store/movieNameStore';
 
 type QueryContext = {
-  queryClient: QueryClient
-}
+  queryClient: QueryClient;
+};
 
 export const Route = createRootRouteWithContext<QueryContext>()({
-  component: Main
-})
+  component: Main,
+});
 
 const activeProps = {
   style: {
-    fontWeight: 'bold'
-  }
-}
-
-const numaux = 1;
+    fontWeight: 'bold',
+  },
+};
 
 function Main() {
   const { setMovieName } = useMovieNameStore();
@@ -39,23 +37,12 @@ function Main() {
               to='/movies/discover'
               activeProps={activeProps}
               search={{
-                page: 1
+                page: 1,
               }}
             >
               Movies
             </Link>
           </li>
-{/*           <li>
-            <Link
-              to='/movies/all/$page'
-              activeProps={activeProps}
-              params={{
-                page: numaux.toString()
-              }}
-            >
-              Movies
-            </Link>
-          </li> */}
           <li>
             <Link
               to='/search'
@@ -65,24 +52,9 @@ function Main() {
               Search
             </Link>
           </li>
-          <li>
-            <Link
-              to='/playlist'
-              activeProps={activeProps}
-            >
-              My Playlist
-            </Link>
-          </li>
-          <li>
-            <Link
-              to='/about'
-              activeProps={activeProps}
-            >
-              About
-            </Link>
-          </li>
         </ul>
       </nav>
+
       <Outlet />
     </>
   );

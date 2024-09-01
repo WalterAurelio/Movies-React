@@ -12,9 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as SearchImport } from './routes/search'
-import { Route as PlaylistImport } from './routes/playlist'
 import { Route as MoviesImport } from './routes/movies'
-import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 import { Route as MoviesDiscoverImport } from './routes/movies/discover'
 import { Route as MoviesWatchMovieImport } from './routes/movies/watch.$movie'
@@ -26,18 +24,8 @@ const SearchRoute = SearchImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const PlaylistRoute = PlaylistImport.update({
-  path: '/playlist',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const MoviesRoute = MoviesImport.update({
   path: '/movies',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const AboutRoute = AboutImport.update({
-  path: '/about',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -67,25 +55,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutImport
-      parentRoute: typeof rootRoute
-    }
     '/movies': {
       id: '/movies'
       path: '/movies'
       fullPath: '/movies'
       preLoaderRoute: typeof MoviesImport
-      parentRoute: typeof rootRoute
-    }
-    '/playlist': {
-      id: '/playlist'
-      path: '/playlist'
-      fullPath: '/playlist'
-      preLoaderRoute: typeof PlaylistImport
       parentRoute: typeof rootRoute
     }
     '/search': {
@@ -116,12 +90,10 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
-  AboutRoute,
   MoviesRoute: MoviesRoute.addChildren({
     MoviesDiscoverRoute,
     MoviesWatchMovieRoute,
   }),
-  PlaylistRoute,
   SearchRoute,
 })
 
@@ -134,17 +106,12 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/about",
         "/movies",
-        "/playlist",
         "/search"
       ]
     },
     "/": {
       "filePath": "index.tsx"
-    },
-    "/about": {
-      "filePath": "about.tsx"
     },
     "/movies": {
       "filePath": "movies.tsx",
@@ -152,9 +119,6 @@ export const routeTree = rootRoute.addChildren({
         "/movies/discover",
         "/movies/watch/$movie"
       ]
-    },
-    "/playlist": {
-      "filePath": "playlist.tsx"
     },
     "/search": {
       "filePath": "search.tsx"

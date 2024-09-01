@@ -10,10 +10,10 @@ export function useGetGenres() {
   });
 }
 
-export function useGetMoviesDiscover(page: number, with_genres: number[] | undefined) {
+export function useGetMoviesDiscover(page: number, with_genres: number[] | undefined, sort_by: string | undefined) {
   return useQuery({
-    queryKey: ['moviesDiscover', { page, with_genres }],
-    queryFn: ({ signal }) => getMoviesDiscover(signal, page, with_genres),
+    queryKey: ['moviesDiscover', { page, with_genres, sort_by }],
+    queryFn: ({ signal }) => getMoviesDiscover(signal, page, with_genres, sort_by),
     placeholderData: keepPreviousData,
   });
 }
@@ -22,6 +22,7 @@ export function useGetMovieDetails(movieId: number | undefined) {
   return useQuery({
     queryKey: ['movieDetails', { movieId }],
     queryFn: ({ signal }) => getMovieDetails(signal, movieId),
+    placeholderData: keepPreviousData
   });
 }
 
@@ -29,5 +30,6 @@ export function useGetMoviesSearch(movieName: string, page: number) {
   return useQuery({
     queryKey: ['moviesSearch', { movieName, page }],
     queryFn: ({ signal }) => getMoviesSearch(signal, movieName, page),
+    placeholderData: keepPreviousData
   });
 }

@@ -1,22 +1,20 @@
+import SelectedTopMovie from "../components/SelectedTopMovie";
+import TopRatedMovies from "../components/TopRatedMovies";
 
 function Hero() {
   return (
-  <section>
-    <div>
-      <h2>Unlimited movies, TV shows and more</h2>
+    <section>
+      <div>
+        <SelectedTopMovie />
+        <h3>Top Rated</h3>
+        <TopRatedMovies />
 
-      <p>Find the latest and greatest movies and shows,
-        all available on Movieto.
-      </p>
+        <p>Find the latest and greatest movies and shows, all available on Movieto.</p>
 
-      <button
-        type="button"
-      >
-        Get Started
-      </button>
-    </div>
-  </section>
-  )
+        <button type='button'>Get Started</button>
+      </div>
+    </section>
+  );
 }
 
-export default Hero
+export default Hero;
