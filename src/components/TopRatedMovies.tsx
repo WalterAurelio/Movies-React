@@ -1,9 +1,8 @@
 import { useGetMoviesDiscover } from '../services/queries';
-import { useTopMovieStore } from '../store/topRatedMovieStore';
+import SingleTopMovie from './SingleTopMovie';
 
 function TopRatedMovies() {
   const { data, error, isFetching } = useGetMoviesDiscover(1, undefined, 'popularity.desc');
-  const { setMovie } = useTopMovieStore();
   let contador = 0;
 
   if (isFetching) return <p>Cargando Top Rated...</p>;
@@ -15,12 +14,10 @@ function TopRatedMovies() {
         if (contador < 9) {
           contador += 1;
           return (
-            <li
+            <SingleTopMovie
               key={movie.id}
-              onClick={() => setMovie(movie)}
-            >
-              <img src={`https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`} />
-            </li>
+              movie={movie}
+            />
           );
         }
       })}

@@ -1,14 +1,14 @@
 import { create } from 'zustand';
-import { MovieDiscover } from '../api/movies';
+import { MovieDetails } from '../api/movies';
 
 type TopMovieState = {
-  movie: MovieDiscover | undefined;
-  setMovie: (movie: MovieDiscover) => void;
+  movie: MovieDetails | undefined;
+  setMovie: (movie: MovieDetails | undefined) => void;
 };
 
 export const useTopMovieStore = create<TopMovieState>(set => ({
   movie: undefined,
-  setMovie: (movie: MovieDiscover) =>
+  setMovie: (movie: MovieDetails | undefined) =>
     set(() => ({
       movie: movie,
     })),
