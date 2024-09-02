@@ -6,11 +6,10 @@ export function useGetGenres() {
   return useQuery({
     queryKey: ['genres'],
     queryFn: ({ signal }) => getGenres(signal),
-    placeholderData: keepPreviousData,
   });
 }
 
-export function useGetMoviesDiscover(page: number, with_genres: number[] | undefined, sort_by: string | undefined) {
+export function useGetMoviesDiscover(page: number, with_genres?: number[], sort_by?: string) {
   return useQuery({
     queryKey: ['moviesDiscover', { page, with_genres }],
     queryFn: ({ signal }) => getMoviesDiscover(signal, page, with_genres, sort_by),
@@ -18,7 +17,7 @@ export function useGetMoviesDiscover(page: number, with_genres: number[] | undef
   });
 }
 
-export function useGetMoviesDiscoverInfinite(sort_by: string | undefined) {
+export function useGetMoviesDiscoverInfinite(sort_by?: string) {
   return useInfiniteQuery({
     queryKey: ['mostViewedMovies'],
     queryFn: ({ pageParam, signal }) => getMoviesDiscover(signal, pageParam, undefined, sort_by),
@@ -27,7 +26,7 @@ export function useGetMoviesDiscoverInfinite(sort_by: string | undefined) {
   });
 }
 
-export function useGetMovieDetails(movieId: number | undefined) {
+export function useGetMovieDetails(movieId: number) {
   return useQuery({
     queryKey: ['movieDetails', { movieId }],
     queryFn: ({ signal }) => getMovieDetails(signal, movieId),

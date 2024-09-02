@@ -1,23 +1,10 @@
 import { Link } from '@tanstack/react-router';
 import { MovieDiscover } from '../api/movies';
 import { useGetGenres } from '../services/queries';
-import { MovieGenre } from '../api/genres';
+import { movieGenres } from '../utils/utils';
 
 function SingleMovie({ movie }: { movie: MovieDiscover }) {
   const { data } = useGetGenres();
-
-  const movieGenres = (genresIds: number[] | undefined): MovieGenre[] | undefined => {
-    if (genresIds && data) {
-      const genreMatches: MovieGenre[] = [];
-      for (let i = 0; i < genresIds.length; i++) {
-        const foundGenre = data.find(genre => genre.id === genresIds[i]);
-        if (foundGenre) {
-          genreMatches.push(foundGenre);
-        }
-      }
-      return genreMatches;
-    }
-  };
 
   return (
     <div>
@@ -33,8 +20,9 @@ function SingleMovie({ movie }: { movie: MovieDiscover }) {
         />
       </Link>
       <p>{movie.release_date.slice(0, 4)}</p>
-      {movieGenres(movie.genre_ids)?.map(genre => (
+      {movieGenres(data, movie.genre_ids)?.map(genre => (
         <Link
+          key={genre.id}
           to='/movies/discover'
           search={{
             page: 1,

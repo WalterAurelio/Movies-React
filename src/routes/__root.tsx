@@ -1,7 +1,8 @@
-import { Link, Outlet, createRootRouteWithContext } from '@tanstack/react-router';
+import { Link, Outlet, ScrollRestoration, createRootRouteWithContext } from '@tanstack/react-router';
 import '../styles/__root.scss';
 import { QueryClient } from '@tanstack/react-query';
 import { useMovieNameStore } from '../store/movieNameStore';
+import Footer from '../layout/Footer';
 
 type QueryContext = {
   queryClient: QueryClient;
@@ -56,6 +57,9 @@ function Main() {
       </nav>
 
       <Outlet />
+      <ScrollRestoration />
+
+      <Footer />
     </>
   );
 }

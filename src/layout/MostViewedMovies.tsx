@@ -2,7 +2,7 @@ import SingleMovie from '../components/SingleMovie';
 import { useGetMoviesDiscoverInfinite } from '../services/queries';
 
 function MostViewedMovies() {
-  const { data, isFetching, error, hasNextPage, fetchNextPage } = useGetMoviesDiscoverInfinite('vote_count.desc');
+  const { data, isFetching, hasNextPage, fetchNextPage } = useGetMoviesDiscoverInfinite('vote_count.desc');
   const movies = data?.pages.flatMap(page => page.results);
 
   return (
