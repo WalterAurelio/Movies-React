@@ -25,7 +25,7 @@ function SelectedTopMovie() {
       <Link
         to='/movies/watch/$movie'
         params={{
-          movie: JSON.stringify({ id: movie?.id, title: movie?.title })
+          movie: JSON.stringify({ id: movie ? movie?.id : data?.id, title: movie ? movie?.title : data?.id })
         }}
       >
         Watch Now
